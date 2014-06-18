@@ -8,7 +8,7 @@
 # Krishna Kumar krish.kumar@gmail.com
 #
 
-GIT_REPO_PATH="/Users/krishna/master/Bonfire"
+GIT_REPO_PATH="/Users/krishna/repo"
 
 TEMP=$(/usr/bin/mktemp -t tmp.git)
 git --git-dir $GIT_REPO_PATH"/.git" --work-tree $GIT_REPO_PATH ls-files -m -o --exclude-standard > ${TEMP}
