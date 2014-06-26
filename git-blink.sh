@@ -8,17 +8,24 @@
 # Krishna Kumar krish.kumar@gmail.com
 #
 
-GIT_REPO_PATH="/Users/krishna/repo"
+GIT_REPO_PATH="$HOME/repo"
 
-TEMP=$(/usr/bin/mktemp -t tmp.git)
-git --git-dir $GIT_REPO_PATH"/.git" --work-tree $GIT_REPO_PATH ls-files -m -o --exclude-standard > ${TEMP}
+# For tracking multiple git repos, use like so - 
+# GIT_REPO_PATH="$HOME/repo
+# $HOME/repo2"
 
-if [ $? != 128 ] && [ "`tail -1 ${TEMP}`" != "" ]
+for repo in $GIT_REPO_PATH
+do
+	TEMP=$(/usr/bin/mktemp -t tmp.git)
+	git --git-dir $repo"/.git" --work-tree $repo ls-files -m -o --exclude-standard > ${TEMP}
+
+	if [ $? != 128 ] && [ "`tail -1 ${TEMP}`" != "" ]
     then
  		# If the exit code isn't 128 (not a git repo) and there's nothing to commit, 
         # blink!
         blink1-tool --quiet --glimmer=10 &
     fi
     rm ${TEMP}
+done
 
 
